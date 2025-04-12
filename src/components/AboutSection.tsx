@@ -172,7 +172,7 @@ const AboutSection: React.FC = () => {
 					<div className="relative">
 						<div className="aspect-square max-w-md mx-auto rounded-xl overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
 							<img
-								src="/src/assets/dp.jpeg"
+								src="/src/assets/dp.jpg"
 								alt="Profile Picture"
 								className="w-full h-full object-cover"
 							/>

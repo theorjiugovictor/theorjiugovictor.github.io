@@ -117,13 +117,17 @@ const Navbar: React.FC = () => {
 							{item.name}
 						</a>
 					))}
-<Button 
-  className="cloud-button mt-4" 
-  onClick={() => window.open('https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link', '_blank', 'noopener,noreferrer')}
->
-  Resume
-</Button>
-
+					<Button
+						className="cloud-button mt-4"
+						onClick={() =>
+							window.open(
+								'https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link',
+								'_blank',
+								'noopener,noreferrer'
+							)
+						}
+					>
+						Resume
 					</Button>
 				</div>
 			</div>
