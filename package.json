@@ -1,7 +1,7 @@
 {
 	"name": "vite_react_shadcn_ts",
 	"private": true,
-	"homepage": "https://github.com/theorjiugovictor/theorjiugovictor.github.io/",
+	"homepage": "https://theorjiugovictor.github.io/",
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
