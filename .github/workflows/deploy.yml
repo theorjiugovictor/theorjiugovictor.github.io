@@ -23,3 +23,6 @@ jobs:
         env:
           GHP_TOKEN: ${{ secrets.GHP_TOKEN }}
           publish_dir: ./dist
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy to GitHub Pages'
