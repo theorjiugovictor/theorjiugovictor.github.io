@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 	];
 
 	return (
-		<nav className="fixed w-full bg-background/80 backdrop-blur-md z-50 border-b border-border">
+		<nav className="fixed w-full py-2 bg-background/80 backdrop-blur-md z-50 border-b border-border">
 			<div className="container mx-auto flex justify-between items-center py-4">
 				<a
 					href="#home"
@@ -117,14 +117,13 @@ const Navbar: React.FC = () => {
 							{item.name}
 						</a>
 					))}
-					<Button className="cloud-button mt-4" asChild>
-						<a
-							href="https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Resume
-						</a>
+<Button 
+  className="cloud-button mt-4" 
+  onClick={() => window.open('https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link', '_blank', 'noopener,noreferrer')}
+>
+  Resume
+</Button>
+
 					</Button>
 				</div>
 			</div>
