@@ -117,15 +117,15 @@ const Navbar: React.FC = () => {
 							{item.name}
 						</a>
 					))}
-					<Button
-						className="cloud-button mt-4"
-						onClick={() => {
-							window.location.href =
-								'https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link';
-						}}
-					>
-						Resume
-					</Button>{' '}
+					<Button className="cloud-button mt-4" asChild>
+						<a
+							href="https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Resume
+						</a>
+					</Button>
 				</div>
 			</div>
 		</nav>
