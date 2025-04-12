@@ -40,8 +40,8 @@ const Navbar: React.FC = () => {
 	];
 
 	return (
-		<nav className="fixed w-full py-2 bg-background/80 backdrop-blur-md z-50 border-b border-border">
-			<div className="container mx-auto flex justify-between items-center py-4">
+		<nav className="fixed w-full py-1 bg-background/80 backdrop-blur-md z-50 border-b border-border">
+			<div className="container mx-auto flex justify-between items-center py-2">
 				<a
 					href="#home"
 					className="text-xl font-inter font-bold text-cloud-dark-blue dark:text-white flex items-center"
@@ -75,7 +75,18 @@ const Navbar: React.FC = () => {
 							<Moon className="h-5 w-5 text-cloud-dark-blue" />
 						)}
 					</Button>
-					<Button className="cloud-button">Resume</Button>
+					<Button
+						className="cloud-button mt-4"
+						onClick={() =>
+							window.open(
+								'https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link',
+								'_blank',
+								'noopener,noreferrer'
+							)
+						}
+					>
+						Resume
+					</Button>
 				</div>
 
 				{/* Mobile Navigation Toggle */}
