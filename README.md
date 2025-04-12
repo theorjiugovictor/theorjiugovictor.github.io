@@ -5,6 +5,7 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 ![Portfolio Preview](preview.png)
 
 ## 🚀 Live Demo
+
 [View Live Site](https://theorjiugovictor.github.io/)
 
 ## ✨ Features
@@ -38,7 +39,8 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 ### Installation
 
 1. Clone the repository
-```bash
+
+````bash
 git clone https://github.com/theorjiugovictor/theorjiugovictor.github.io.git
 
 2. Navigate to project directory
@@ -51,11 +53,14 @@ npm install
 
 # or
 yarn install
-```
+````
+
 4. Start the development server
+
 ```bash
 npm run dev
 # or
 yarn dev
 ```
+
 5. Open your browser and navigate to `http://localhost:5173`
