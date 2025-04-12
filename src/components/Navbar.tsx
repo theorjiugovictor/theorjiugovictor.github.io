@@ -40,8 +40,8 @@ const Navbar: React.FC = () => {
 	];
 
 	return (
-		<nav className="fixed w-full py-1 bg-background/80 backdrop-blur-md z-50 border-b border-border">
-			<div className="container mx-auto flex justify-between items-center py-2">
+		<nav className="fixed w-full py-0 bg-background/80 backdrop-blur-md z-50 border-b border-border">
+			<div className="container mx-auto flex justify-between items-center py-1">
 				<a
 					href="#home"
 					className="text-xl font-inter font-bold text-cloud-dark-blue dark:text-white flex items-center"
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
 					))}
 					<Button
 						variant="ghost"
-						size="icon"
+						size="sm"
 						onClick={toggleDarkMode}
 						className="ml-2"
 					>
@@ -76,7 +76,8 @@ const Navbar: React.FC = () => {
 						)}
 					</Button>
 					<Button
-						className="cloud-button mt-4"
+						className="cloud-button mt-0"
+						size="sm"
 						onClick={() =>
 							window.open(
 								'https://drive.google.com/file/d/1KHXrNaOJQbnlQxlPZUcCxJ5ZTLn7Q7vJ/view?usp=drive_link',

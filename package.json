@@ -1,7 +1,7 @@
 {
 	"name": "vite_react_shadcn_ts",
 	"private": true,
-	"homepage": "https://theorjiugovictor.github.io/",
+	"homepage": "https://theorjiugovictor.github.io/theorjiugovictor.github.io/",
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
@@ -11,7 +11,7 @@
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d dist -r https://x-access-token:${GITHUB_TOKEN}@github.com/theorjiugovictor/theorjiugovictor.github.io.git"
+		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
 		"@emailjs/browser": "^4.4.1",
