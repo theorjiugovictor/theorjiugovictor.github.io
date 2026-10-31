@@ -1,110 +1,664 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+/* Palette: cool drafting paper, deep navy ink, verdigris and brass.
+   Metals nod to the materials-engineering start; the node canvas nods to platform work. */
+:root {
+	--paper: #edf1f4;
+	--panel: #f8fafb;
+	--ink: #14213d;
+	--ink-soft: #46526b;
+	--line: #cfd8e1;
+	--verdigris: #2f6f5e;
+	--verdigris-soft: #d6e7e1;
+	--brass: #9a7224;
+	--brass-soft: #f1e6cd;
+	--dot: #c3ccd6;
+	--sans: 'Familjen Grotesk', 'Helvetica Neue', Arial, sans-serif;
+	--serif: 'Newsreader', Georgia, serif;
+	color-scheme: light;
+}
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-	:root {
-		--background: 210 33% 98%; /* Light off-white */
-		--foreground: 215 28% 17%; /* Dark blue text */
-
-		--card: 0 0% 100%;
-		--card-foreground: 215 28% 17%;
-
-		--popover: 0 0% 100%;
-		--popover-foreground: 215 28% 17%;
-
-		--primary: 220 82% 24%; /* #102542 - deep blue */
-		--primary-foreground: 210 40% 98%;
-
-		--secondary: 204 100% 32%; /* #0062A3 - azure */
-		--secondary-foreground: 210 40% 98%;
-
-		--muted: 210 40% 96.1%;
-		--muted-foreground: 215.4 16.3% 46.9%;
-
-		--accent: 199 100% 49%; /* #00A6FB - bright blue */
-		--accent-foreground: 210 40% 98%;
-
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 210 40% 98%;
-
-		--border: 214.3 31.8% 91.4%;
-		--input: 214.3 31.8% 91.4%;
-		--ring: 199 100% 49%; /* Bright blue */
-
-		--radius: 0.5rem;
-	}
-
-	.dark {
-		--background: 215 28% 17%; /* #102542 - deep blue */
-		--foreground: 210 40% 98%;
-
-		--card: 220 18% 20%; /* Slightly lighter than background */
-		--card-foreground: 210 40% 98%;
-
-		--popover: 220 18% 20%;
-		--popover-foreground: 210 40% 98%;
-
-		--primary: 210 40% 98%; /* Off-white */
-		--primary-foreground: 215 28% 17%;
-
-		--secondary: 204 100% 32%; /* #0062A3 - azure */
-		--secondary-foreground: 210 40% 98%;
-
-		--muted: 217.2 32.6% 17.5%;
-		--muted-foreground: 215 20.2% 65.1%;
-
-		--accent: 199 100% 49%; /* #00A6FB - bright blue */
-		--accent-foreground: 210 40% 98%;
-
-		--destructive: 0 62.8% 30.6%;
-		--destructive-foreground: 210 40% 98%;
-
-		--border: 217.2 32.6% 17.5%;
-		--input: 217.2 32.6% 17.5%;
-		--ring: 199 100% 49%; /* Bright blue */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--paper: #101a2c;
+		--panel: #16233a;
+		--ink: #e6ebf2;
+		--ink-soft: #a7b3c6;
+		--line: #2a3a55;
+		--verdigris: #6fbfa6;
+		--verdigris-soft: #1d3a37;
+		--brass: #d8b26a;
+		--brass-soft: #3a3020;
+		--dot: #24324b;
+		color-scheme: dark;
 	}
 }
 
-@layer base {
-	* {
-		@apply border-border;
-	}
+* {
+	box-sizing: border-box;
+}
 
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 72px;
+}
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--serif);
+	font-size: 19px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.mark,
+nav,
+.btn,
+th,
+.win-year,
+.paper-year,
+.talk-when,
+.role-when,
+.project-stack,
+.comm-org {
+	font-family: var(--sans);
+}
+
+a {
+	color: var(--verdigris);
+	text-underline-offset: 3px;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: 3px solid var(--brass);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.skip {
+	position: absolute;
+	left: -999px;
+}
+.skip:focus {
+	left: 16px;
+	top: 12px;
+	z-index: 20;
+	background: var(--panel);
+	padding: 8px 12px;
+}
+
+.wrap {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+/* Header */
+.top {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 14px 24px;
+	background: color-mix(in srgb, var(--paper) 88%, transparent);
+	backdrop-filter: blur(8px);
+	border-bottom: 1px solid var(--line);
+}
+.mark {
+	font-weight: 700;
+	font-size: 17px;
+	color: var(--ink);
+	text-decoration: none;
+}
+nav {
+	display: flex;
+	gap: 22px;
+	font-size: 15px;
+}
+nav a {
+	color: var(--ink-soft);
+	text-decoration: none;
+}
+nav a:hover {
+	color: var(--ink);
+}
+nav .nav-cv {
+	color: var(--verdigris);
+	font-weight: 600;
+}
+.menu-btn {
+	display: none;
+	font: 600 15px var(--sans);
+	background: none;
+	border: 1px solid var(--line);
+	color: var(--ink);
+	border-radius: 999px;
+	padding: 6px 14px;
+}
+
+/* Hero */
+.hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+	gap: 48px;
+	align-items: center;
+	padding-top: 88px;
+	padding-bottom: 72px;
+}
+h1 {
+	font-size: clamp(36px, 4.6vw, 58px);
+	line-height: 1.06;
+	letter-spacing: -0.02em;
+	font-weight: 600;
+	margin: 0 0 24px;
+	max-width: 14ch;
+}
+.lede {
+	font-size: 20px;
+	color: var(--ink-soft);
+	max-width: 36em;
+	margin: 0 0 32px;
+}
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.btn {
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 11px 20px;
+	border-radius: 999px;
+	border: 1.5px solid var(--ink);
+	color: var(--ink);
+	background: transparent;
+	text-decoration: none;
+	cursor: pointer;
+}
+.btn-solid {
+	background: var(--ink);
+	color: var(--paper);
+}
+.btn-plain {
+	border-color: transparent;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+/* Canvas */
+.hero-canvas {
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	padding: 8px;
+}
+.canvas {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.dot {
+	fill: var(--dot);
+}
+.wire {
+	fill: none;
+	stroke: var(--verdigris);
+	stroke-width: 2.5;
+	stroke-dasharray: 600;
+	stroke-dashoffset: 600;
+	animation: draw 1.4s ease-out forwards;
+}
+@keyframes draw {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+.node rect {
+	fill: var(--panel);
+	stroke: var(--ink);
+	stroke-width: 1.5;
+}
+.node-key rect {
+	fill: var(--brass-soft);
+	stroke: var(--brass);
+	stroke-width: 2;
+}
+.port {
+	fill: var(--panel);
+	stroke: var(--verdigris);
+	stroke-width: 2;
+}
+.node-title {
+	font: 600 16px var(--sans);
+	fill: var(--ink);
+}
+.node-sub {
+	font: 400 14px var(--sans);
+	fill: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	.wire {
+		animation: none;
+		stroke-dashoffset: 0;
+	}
+}
+
+/* Sections */
+.section {
+	padding-top: 72px;
+	padding-bottom: 32px;
+	border-top: 1px solid var(--line);
+}
+h2 {
+	font-size: clamp(28px, 3vw, 36px);
+	line-height: 1.15;
+	letter-spacing: -0.01em;
+	font-weight: 600;
+	margin: 0 0 32px;
+}
+h3 {
+	font-weight: 600;
+	letter-spacing: -0.005em;
+}
+.section-intro,
+.side-note {
+	color: var(--ink-soft);
+	max-width: 34em;
+	margin-top: -16px;
+	margin-bottom: 28px;
+}
+.split {
+	display: grid;
+	grid-template-columns: 280px minmax(0, 1fr);
+	gap: 48px;
+}
+.split-side h2 {
+	position: sticky;
+	top: 96px;
+}
+.split-side .side-note {
+	margin-top: 0;
+	font-style: italic;
+}
+
+/* Wins: a ledger. Gold wins carry a brass rule. */
+.wins {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0 48px;
+}
+.win {
+	display: grid;
+	grid-template-columns: 56px 1fr;
+	gap: 16px;
+	padding: 20px 0 20px 16px;
+	border-left: 3px solid var(--line);
+	margin-bottom: 8px;
+}
+.win-gold {
+	border-left-color: var(--brass);
+}
+.win-podium {
+	border-left-color: var(--verdigris);
+}
+.win-year {
+	font-weight: 600;
+	font-size: 15px;
+	color: var(--ink-soft);
+	padding-top: 3px;
+}
+.win-head {
+	margin: 0 0 4px;
+	font-size: 19px;
+	line-height: 1.35;
+}
+.win-gold .win-head strong {
+	color: var(--brass);
+}
+.win-note {
+	margin: 0;
+	font-size: 17px;
+	color: var(--ink-soft);
+}
+
+/* Papers */
+.papers,
+.talks,
+.roles {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.papers li {
+	display: grid;
+	grid-template-columns: 56px 1fr;
+	gap: 16px;
+	padding: 18px 0;
+	border-bottom: 1px solid var(--line);
+}
+.papers li:first-child .paper-title {
+	font-size: 24px;
+}
+.paper-year {
+	font-weight: 600;
+	font-size: 15px;
+	color: var(--ink-soft);
+	padding-top: 4px;
+}
+.paper-title {
+	margin: 0 0 4px;
+	font-size: 20px;
+	line-height: 1.35;
+	font-weight: 500;
+}
+.paper-venue {
+	margin: 0;
+	font-size: 17px;
+	color: var(--ink-soft);
+}
+.paper-status {
+	display: inline-block;
+	margin: 10px 0 0;
+	font: 600 14px var(--sans);
+	color: var(--verdigris);
+	background: var(--verdigris-soft);
+	padding: 3px 10px;
+	border-radius: 999px;
+}
+
+/* Talks */
+.talks li {
+	display: grid;
+	grid-template-columns: 90px minmax(0, 1fr) minmax(0, 0.8fr);
+	gap: 16px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--line);
+	align-items: baseline;
+}
+.talk-when {
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--ink-soft);
+}
+.talk-title {
+	font-size: 19px;
+}
+.talk-where {
+	font-size: 16px;
+	color: var(--ink-soft);
+}
+
+/* Projects: two lead pieces, then a denser grid */
+.projects {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 20px;
+}
+.project {
+	grid-column: span 2;
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+}
+.project h3 {
+	font-size: 22px;
+	margin: 0 0 6px;
+}
+.project-lead {
+	border-top: 4px solid var(--verdigris);
+}
+.project-lead h3 {
+	font-size: 28px;
+}
+.project-line {
+	margin: 0 0 12px;
+	font-style: italic;
+	font-size: 19px;
+}
+.project-detail {
+	margin: 0 0 16px;
+	font-size: 17px;
+	color: var(--ink-soft);
+}
+.project-stack {
+	margin: auto 0 0;
+	font-size: 14px;
+	color: var(--ink-soft);
+}
+.project-link {
+	margin-top: 10px;
+	font: 600 15px var(--sans);
+}
+
+/* Hackathon table */
+.table-scroll {
+	overflow-x: auto;
+}
+.hacks {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 17px;
+}
+.hacks th {
+	text-align: left;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--ink-soft);
+	padding: 0 16px 10px 0;
+	border-bottom: 1.5px solid var(--ink);
+}
+.hacks td {
+	padding: 12px 16px 12px 0;
+	border-bottom: 1px solid var(--line);
+	vertical-align: top;
+}
+.nowrap {
+	white-space: nowrap;
+	color: var(--ink-soft);
+}
+.res {
+	font-family: var(--sans);
+	font-size: 15px;
+	color: var(--ink-soft);
+	white-space: nowrap;
+}
+.res-hit {
+	color: var(--brass);
+	font-weight: 600;
+}
+.more {
+	margin-top: 20px;
+}
+
+/* Work */
+.portrait {
+	display: block;
+	width: 100%;
+	max-width: 240px;
+	height: auto;
+	border-radius: 14px;
+	margin-top: 120px;
+	position: sticky;
+	top: 170px;
+}
+.roles > li {
+	padding-bottom: 28px;
+	margin-bottom: 28px;
+	border-bottom: 1px solid var(--line);
+}
+.role-when {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--verdigris);
+}
+.roles h3 {
+	font-size: 23px;
+	margin: 4px 0 0;
+}
+.role-place {
+	margin: 0 0 10px;
+	color: var(--ink-soft);
+	font-size: 16px;
+}
+.roles ul {
+	margin: 0;
+	padding-left: 20px;
+	font-size: 17px;
+}
+.roles ul li {
+	margin-bottom: 6px;
+}
+.sub-h {
+	font-size: 20px;
+	margin: 8px 0 10px;
+}
+.plain {
+	padding-left: 20px;
+	font-size: 17px;
+	margin: 0 0 32px;
+}
+
+/* Community */
+.community {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 36px 40px;
+}
+.comm-org {
+	margin: 0;
+	font-size: 20px;
+	font-weight: 600;
+}
+.comm-role {
+	margin: 0 0 8px;
+	color: var(--verdigris);
+	font-size: 16px;
+	font-style: italic;
+}
+.comm-note {
+	margin: 0;
+	font-size: 17px;
+	color: var(--ink-soft);
+}
+
+.contact p {
+	font-size: 22px;
+	max-width: 30em;
+	margin-top: 0;
+}
+.foot {
+	padding-top: 40px;
+	padding-bottom: 48px;
+	color: var(--ink-soft);
+	font-size: 15px;
+	font-family: var(--sans);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+	.hero {
+		grid-template-columns: 1fr;
+		padding-top: 48px;
+	}
+	.split {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+	.split-side h2 {
+		position: static;
+	}
+	.portrait {
+		position: static;
+		margin: 0 0 28px;
+		max-width: 180px;
+	}
+	.wins {
+		grid-template-columns: 1fr;
+	}
+	.community {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.projects {
+		grid-template-columns: 1fr 1fr;
+	}
+	.project {
+		grid-column: span 1;
+	}
+	.project-lead {
+		grid-column: span 2;
+	}
+	.menu-btn {
+		display: inline-block;
+	}
+	nav {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		flex-direction: column;
+		gap: 0;
+		background: var(--panel);
+		border-bottom: 1px solid var(--line);
+		padding: 8px 16px 16px;
+	}
+	nav.open {
+		display: flex;
+	}
+	nav a {
+		padding: 10px 0;
+		font-size: 17px;
+	}
+}
+
+@media (max-width: 600px) {
 	body {
-		@apply bg-background text-foreground font-source-sans;
+		font-size: 18px;
 	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply font-inter font-semibold;
+	.wrap {
+		padding-left: 16px;
+		padding-right: 16px;
 	}
-
-	.container {
-		@apply px-4 md:px-8;
+	.top {
+		padding: 12px 16px;
 	}
-}
-
-@layer components {
-	.cloud-gradient {
-		@apply bg-gradient-to-br from-cloud-dark-blue via-cloud-azure to-cloud-bright-blue;
+	.projects,
+	.community {
+		grid-template-columns: 1fr;
 	}
-
-	.cloud-button {
-		@apply px-6 py-3 font-inter font-medium transition-all rounded-md bg-cloud-bright-blue hover:bg-cloud-azure text-white shadow-md hover:shadow-lg;
+	.project,
+	.project-lead {
+		grid-column: span 1;
 	}
-
-	.section-title {
-		@apply text-3xl md:text-4xl font-bold mb-8 text-cloud-dark-blue dark:text-white;
+	.talks li {
+		grid-template-columns: 1fr;
+		gap: 2px;
 	}
-
-	.cloud-card {
-		@apply bg-white dark:bg-card rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-gray-700;
+	.papers li,
+	.win {
+		grid-template-columns: 1fr;
+		gap: 2px;
 	}
 }
