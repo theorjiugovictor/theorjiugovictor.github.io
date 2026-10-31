@@ -1,4 +1,4 @@
-# theorjiugovictor.com
+# theorjiugovictor.github.io
 
 Personal site of Prince Victor Orjiugo. Vite + React, deployed to GitHub Pages.
 
