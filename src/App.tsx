@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import portrait from './assets/dp.jpg';
+import Stigmergy from './Stigmergy';
 import {
 	links,
 	wins,
@@ -12,74 +13,6 @@ import {
 	community,
 	certifications,
 } from './data';
-
-/* The hero canvas: Prince's path drawn as a workflow graph,
-   the way a pipeline looks in n8n or Breadth. */
-const nodes = [
-	{ id: 'mat', x: 24, y: 40, title: 'Materials engineering', sub: 'Nsukka, 2021' },
-	{ id: 'cloud', x: 24, y: 190, title: 'Cloud and backend', sub: 'Lagos, remote' },
-	{ id: 'wl', x: 270, y: 115, title: 'Platform engineering', sub: 'Worldline, Stockholm' },
-	{ id: 'msc', x: 270, y: 255, title: 'MSc research', sub: 'Stockholm University' },
-	{ id: 'iidp', x: 516, y: 185, title: 'IIDP', sub: 'CENTERIS 2026' },
-];
-const wires: [string, string][] = [
-	['mat', 'wl'],
-	['cloud', 'wl'],
-	['wl', 'iidp'],
-	['msc', 'iidp'],
-	['cloud', 'msc'],
-];
-const W = 196;
-const H = 64;
-
-function PathCanvas() {
-	const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
-	return (
-		<svg
-			className="canvas"
-			viewBox="0 0 736 350"
-			role="img"
-			aria-label="Career path drawn as a workflow: materials engineering and cloud work feed into platform engineering at Worldline and MSc research, which both feed into IIDP research."
-		>
-			<defs>
-				<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
-					<circle cx="1.5" cy="1.5" r="1.2" className="dot" />
-				</pattern>
-			</defs>
-			<rect width="736" height="350" fill="url(#dots)" />
-			{wires.map(([a, b], i) => {
-				const s = byId[a];
-				const t = byId[b];
-				const x1 = s.x + W;
-				const y1 = s.y + H / 2;
-				const x2 = t.x;
-				const y2 = t.y + H / 2;
-				const mid = (x1 + x2) / 2;
-				return (
-					<path
-						key={a + b}
-						className="wire"
-						style={{ animationDelay: `${0.15 * i}s` }}
-						d={`M${x1},${y1} C${mid},${y1} ${mid},${y2} ${x2},${y2}`}
-					/>
-				);
-			})}
-			{nodes.map((n) => (
-				<g key={n.id} transform={`translate(${n.x},${n.y})`} className={n.id === 'iidp' ? 'node node-key' : 'node'}>
-					<rect width={W} height={H} rx="10" />
-					<circle cx="0" cy={H / 2} r="5" className="port" />
-					<circle cx={W} cy={H / 2} r="5" className="port" />
-					<text x="16" y="28" className="node-title">
-						{n.title}
-					</text>
-					<text x="16" y="47" className="node-sub">
-						{n.sub}
-					</text>
-				</g>
-			))}
-		</svg>
-	);
-}
 
 const nav = [
 	['wins', 'Wins'],
@@ -124,13 +57,13 @@ export default function App() {
 			<a className="skip" href="#main">
 				Skip to content
 			</a>
+			<Stigmergy />
 			<Header />
 			<main id="main">
-				<section id="top" className="hero wrap">
-					<div className="hero-text">
-						<h1>
-							I build platforms that help engineers understand the systems they run.
-						</h1>
+				<section id="top" className="hero">
+					<div className="wrap hero-inner">
+						<p className="hero-name">Prince Victor Orjiugo</p>
+						<h1>I build platforms that help engineers understand the systems they run.</h1>
 						<p className="lede">
 							Platform engineer at Worldline in Stockholm. My research on Intelligent Internal Developer Platforms is
 							accepted at CENTERIS 2026, and I&rsquo;ve won the Epiminds &times; Google and Ericsson hackathons. I trained as a
@@ -150,11 +83,13 @@ export default function App() {
 								GitHub
 							</a>
 						</div>
-					</div>
-					<div className="hero-canvas">
-						<PathCanvas />
+						<p className="field-note">
+							The background is a live stigmergy simulation: thousands of agents coordinating only through the trails
+							they leave, the idea behind my multi-agent work. Move your cursor to feed it.
+						</p>
 					</div>
 				</section>
+				<div className="fade" aria-hidden="true" />
 
 				<section id="wins" className="wrap section">
 					<h2>Wins and recognition</h2>
@@ -162,10 +97,11 @@ export default function App() {
 						{wins.map((w) => (
 							<li key={w.event + w.year} className={`win win-${w.tier}`}>
 								<span className="win-year">{w.year}</span>
-								<div>
-									<p className="win-head">
-										<strong>{w.result}</strong>, {w.event}
-									</p>
+								<p className="win-head">
+									<strong>{w.result}</strong>
+								</p>
+								<div className="win-body">
+									<p className="win-event">{w.event}</p>
 									<p className="win-note">{w.note}</p>
 								</div>
 							</li>
@@ -215,14 +151,20 @@ export default function App() {
 					<div className="projects">
 						{projects.map((p, i) => (
 							<article key={p.name} className={i < 2 ? 'project project-lead' : 'project'}>
-								<h3>{p.name}</h3>
-								<p className="project-line">{p.line}</p>
-								<p className="project-detail">{p.detail}</p>
-								<p className="project-stack">{p.stack}</p>
-								{p.href && (
+								<div className="project-head">
+									<h3>{p.name}</h3>
+									<p className="project-line">{p.line}</p>
+								</div>
+								<div className="project-body">
+									<p className="project-detail">{p.detail}</p>
+									<p className="project-stack">{p.stack}</p>
+								</div>
+								{p.href ? (
 									<a href={p.href} className="project-link">
 										{p.linkText}
 									</a>
+								) : (
+									<span />
 								)}
 							</article>
 						))}
